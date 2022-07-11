@@ -11,4 +11,13 @@ client.on("ready", () => {
     morningJob(channel).start()
 });
 
+client.on("message", (msg)=>{
+    if(msg.content === 'Hey'){
+        msg.channel.send('Hey there, friend.')
+    }
+    else if(msg.content.includes('i love you')){
+        msg.channel.send('I love you, friend.')
+    }
+})
+
 client.login(process.env.SECRET_TOKEN);
