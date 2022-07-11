@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { Client, Intents } = require('discord.js');
 const morningJob = require('./src/crons/cron');
+const keepAlive = require('./server');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -20,4 +21,5 @@ client.on("message", (msg)=>{
     }
 })
 
+keepAlive()
 client.login(process.env.SECRET_TOKEN);
