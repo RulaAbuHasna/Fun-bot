@@ -30,10 +30,9 @@ client.on("message", (message) => {
         //   })
         collector.on('collect', m => {
             if (m.content === 'yes') {
-                const embed = new MessageEmbed({  title: 'Great 🥰', description: 'I will send you an invite later today',  color:'BLURPLE'})
+                const embed = new MessageEmbed({ title: 'Great 🥰', description: 'I will send you an invite later today', color: 'BLURPLE' })
                 message.reply({ embeds: [embed] })
             }
-
         })
     }
 })
