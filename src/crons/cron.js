@@ -14,7 +14,7 @@ const randomMornings = [
 ]
 
 const morningJob = channel => new CronJob(
-    '* 10 * * *',
+    '0 10 * * *',
     function () {
         channel.send(Math.random() > 0.5 ? randomMornings[Math.floor(Math.random() * randomMornings.length)] : "Good morning, friend. Thanks for bringing sunshine to my life every day.");
     }
