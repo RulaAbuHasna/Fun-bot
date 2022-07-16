@@ -1,7 +1,8 @@
 require('dotenv').config();
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, MessageEmbed } = require('discord.js');
 const morningJob = require('./src/crons/cron');
 const keepAlive = require('./server');
+const { isMessageValid, response } = require('./src/helpers/helpers')
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -12,12 +13,28 @@ client.on("ready", () => {
     morningJob(channel).start()
 });
 
-client.on("message", (msg)=>{
-    if(msg.content === 'Hey'){
-        msg.channel.send('Hey there, friend.')
+client.on("message", (message) => {
+    const msg = message.content
+
+    if (message.author.bot) { // Don't listen to bots. Even Idle-RPG himself.
+        return;
     }
-    else if(msg.content.includes('i love you')){
-        msg.channel.send('I love you, friend.')
+    if (isMessageValid(msg)) {
+        message.reply(response(msg))
+    } else if (msg === '#play') {
+        message.reply('Wanna play tic tac toe with me?')
+
+        const collector = message.channel.createMessageCollector({ max: 10, time: 10000 });
+        //   collector.on('collect', m => {
+        //       console.log(m.content);
+        //   })
+        collector.on('collect', m => {
+            if (m.content === 'yes') {
+                const embed = new MessageEmbed({  title: 'Great 🥰', description: 'I will send you an invite later today',  color:'BLURPLE'})
+                message.reply({ embeds: [embed] })
+            }
+
+        })
     }
 })
 
